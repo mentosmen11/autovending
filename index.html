@@ -1,12 +1,15 @@
-<html>
-  <head>
-    <meta property="og:title" content="autovending">
-    <meta property="og:description" content="자동 자판기">
-    <meta property="og:url" content="login">
-    <meta property="og:image" content="https://media.discordapp.net/attachments/909126755342757959/997119425511702528/web-20180221134703204109.png">
-    <meta content="#0077ff" data-react-helmet="true" name="theme-color">
-    <script type='text/javascript'>
-      location.href = 'login'; 
-    </script>
-  </head>
-</html>
+
+{% extends "layout.html" %}
+{% block content %}
+<div class="productcontent">
+    <div class="t">
+        <button type="button" id="sidebarCollapse" class="btn">
+        <i class="fa fa-list"></i>
+        </button> <span class="title">공지사항</span>
+    </div>
+    <div class="html">
+        {{notice|safe}}
+    </div>
+</div>
+{% endblock %}
+            
