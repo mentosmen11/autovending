@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>WEBPANEL</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <script>
+          function save(){
+            $.ajax({
+                url: "",
+                type: "post",
+                data: $(".main-settings").serialize(),
+            }).done(function(data) {
+                if (data == "ok"){
+                    Swal.fire({
+                    title : '성공',
+                    text : '저장되었습니다.',
+                    icon : "success"
+                    });
+                }else{
+                    Swal.fire(
+                    '오류',
+                    data,
+                    'error'
+                    );
+                }
+            });
+        }
+        
+        function del(){
+            $.ajax({
+                url: "",
+                type: "delete",
+            }).done(function(data) {
+                if (data == "ok"){
+                    location.href = "/products";
+                }else{
+                    Swal.fire(
+                    '오류',
+                    data,
+                    'error'
+                    );
+                }
+            });
+        }
+        </script>
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand ps-3">WEBPANEL</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            </form>
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/logout" style="color: red;">로그아웃</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <a class="nav-link" href="/main">
+                                <div class="sb-nav-link-icon"><i class="fas fa-sliders-h"></i></div>
+                                기본 설정
+                            </a>
+                            <a class="nav-link" href="/users">
+                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                유저 관리
+                            </a>
+                            <a class="nav-link" href="/products">
+                                <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
+                                제품 관리
+                            </a>
+                            <a class="nav-link" href="/license">
+                                <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
+                                라이센스 관리
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <form class="main-settings">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                제품 이름 설정
+                            </div>
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label>제품 이름</label>
+                                    <input class="form-control" id="name" placeholder="제품 이름" name="name" value="{{product[1]}}">
+                                  </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                가격 설정
+                            </div>
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label>제품 가격</label>
+                                    <input class="form-control" id="price" placeholder="제품 가격" name="price" value="{{product[2]}}">
+                                  </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                재고 관리
+                            </div>
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label>재고 관리</label>
+                                    <textarea class="form-control" rows="10" id="stocks" placeholder="입력칸" name="stocks" style="resize: none;">{{product[3]}}</textarea>
+                                  </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                        <div style="float: right;">
+                            <button type="button" class="btn btn-primary" onclick="save();">저장하기</button>
+                        </div>
+                        <div style="float: right;">
+                            <button type="button" class="btn btn-danger"  onclick="del();">제품 삭제</button>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/datatables-simple-demo.js') }}"></script>
+    </body>
+</html>
